@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/day_1"
+        android:title="DAY 1"
+        />
+    <item
+        android:id="@+id/day_2"
+        android:title="DAY 2"
+        />
+    <item
+        android:id="@+id/day_3"
+        android:title="DAY 3"
+        />
+    <item
+        android:id="@+id/day_4"
+        android:title="DAY 4"
+        />
+    <item
+        android:id="@+id/day_5"
+        android:title="DAY 5"
+        />
+    <item
+        android:id="@+id/day_6"
+        android:title="DAY 6"
+        />
+    <item
+        android:id="@+id/day_7"
+        android:title="DAY 7"
+        />
+</menu>

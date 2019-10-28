@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<declare-styleable name="ButtonAttrs">
+    <attr name="background" format="color">@colors/colorPrimary</attr>
+    <attr name="size" format="size">25sp</attr>
+</declare-styleable>

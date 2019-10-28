@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">IZHO</string>
+    <string name="student">Student</string>
+    <string name="teacher">Teacher</string>
+    <string name="team_lead">Team Leader</string>
+    <string name="login">Login</string>
+</resources>
