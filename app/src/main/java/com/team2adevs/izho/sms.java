@@ -60,10 +60,10 @@ public class sms extends AppCompatActivity {
                             Editable sms = et.getText();
                             System.out.println(response);
                             String type = response.getString(2);
+                            ((MyApplication)getApplication()).setType(type);
                             int code = response.getInt(3);
                             if ((Integer.parseInt(sms.toString())) == code){
                                 Intent intent = new Intent(sms.this, MainWindow.class);
-                                intent.putExtra("type", type);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 finish();

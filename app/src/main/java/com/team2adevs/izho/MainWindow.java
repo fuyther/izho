@@ -27,7 +27,7 @@ import java.util.Date;
 
 public class MainWindow extends AppCompatActivity {
     String type;
-    String day = "2020-01-08";
+    String day = ((MyApplication) getApplication()).getToday();
 
 
     final String[] days = {"2020-01-08", "2020-01-09", "2020-01-10", "2020-01-11", "2020-01-12", "2020-01-13", "2020-01-14", "2020-01-15"};
@@ -35,14 +35,14 @@ public class MainWindow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_window);
-
+        type = ((MyApplication)getApplication()).getType();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            type = extras.getString("type");
             try{
-                day = extras.getString("day");
+                String day_ = extras.getString("day");
+                day = day_;
             } catch (Exception e){
-                day = "2020-01-08";
+                System.out.println("day is empty");
             }
             System.out.println(day);
         }
