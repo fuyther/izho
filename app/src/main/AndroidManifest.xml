@@ -15,13 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".sms"></activity>
         <activity android:name=".EventWindow" />
         <activity android:name=".MyListWindow" />
         <activity android:name=".SettingsWindow" />
-        <activity android:name=".MainWindow" />
-
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainWindow">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
