@@ -26,16 +26,11 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class MyListWindow extends AppCompatActivity {
-    String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_list_window);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            type = extras.getString("type");
-        }
         setTitle("My List");
 
         final LinearLayout layout = findViewById(R.id.linear_mylist);
@@ -105,14 +100,12 @@ public class MyListWindow extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     Intent intent = new Intent(MyListWindow.this, MainWindow.class);
-                    intent.putExtra("type", type);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
                     return true;
                 case R.id.settings:
                     Intent intent1 = new Intent(MyListWindow.this, SettingsWindow.class);
-                    intent1.putExtra("type", type);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();

@@ -1,6 +1,7 @@
 package com.team2adevs.izho;
 
 import android.app.ActionBar;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,7 +28,7 @@ import java.util.Date;
 
 public class MainWindow extends AppCompatActivity {
     String type;
-    String day = ((MyApplication) getApplication()).getToday();
+    String day;
 
 
     final String[] days = {"2020-01-08", "2020-01-09", "2020-01-10", "2020-01-11", "2020-01-12", "2020-01-13", "2020-01-14", "2020-01-15"};
@@ -36,17 +37,7 @@ public class MainWindow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_window);
         type = ((MyApplication)getApplication()).getType();
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            try{
-                String day_ = extras.getString("day");
-                day = day_;
-            } catch (Exception e){
-                System.out.println("day is empty");
-            }
-            System.out.println(day);
-        }
-
+        day = ((MyApplication) getApplication()).getDay();
         final LinearLayout layout = findViewById(R.id.linear_l);
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar);
@@ -77,63 +68,56 @@ public class MainWindow extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.day_1:
                 System.out.println("Day 1");
+                ((MyApplication)getApplication()).setDay(days[0]);
                 Intent intent = new Intent(MainWindow.this, MainWindow.class);
-                intent.putExtra("day", days[0]);
-                intent.putExtra("type", type);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
             case R.id.day_2:
                 System.out.println("Day 2");
+                ((MyApplication)getApplication()).setDay(days[1]);
                 Intent intent1 = new Intent(MainWindow.this, MainWindow.class);
-                intent1.putExtra("day", days[1]);
-                intent1.putExtra("type", type);
                 startActivity(intent1);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
             case R.id.day_3:
                 System.out.println("Day 3");
+                ((MyApplication)getApplication()).setDay(days[2]);
                 Intent intent2 = new Intent(MainWindow.this, MainWindow.class);
-                intent2.putExtra("day", days[2]);
-                intent2.putExtra("type", type);
                 startActivity(intent2);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
             case R.id.day_4:
                 System.out.println("Day 4");
+                ((MyApplication)getApplication()).setDay(days[3]);
                 Intent intent3 = new Intent(MainWindow.this, MainWindow.class);
-                intent3.putExtra("day", days[3]);
-                intent3.putExtra("type", type);
                 startActivity(intent3);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
             case R.id.day_5:
                 System.out.println("Day 5");
+                ((MyApplication)getApplication()).setDay(days[4]);
                 Intent intent4 = new Intent(MainWindow.this, MainWindow.class);
-                intent4.putExtra("day", days[4]);
-                intent4.putExtra("type", type);
                 startActivity(intent4);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
             case R.id.day_6:
                 System.out.println("Day 6");
+                ((MyApplication)getApplication()).setDay(days[5]);
                 Intent intent5 = new Intent(MainWindow.this, MainWindow.class);
-                intent5.putExtra("day", days[5]);
-                intent5.putExtra("type", type);
                 startActivity(intent5);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
             case R.id.day_7:
                 System.out.println("Day 7");
+                ((MyApplication)getApplication()).setDay(days[6]);
                 Intent intent6 = new Intent(MainWindow.this, MainWindow.class);
-                intent6.putExtra("day", days[6]);
-                intent6.putExtra("type", type);
                 startActivity(intent6);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -150,14 +134,12 @@ public class MainWindow extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.mylist:
                     Intent intent = new Intent(MainWindow.this, MyListWindow.class);
-                    intent.putExtra("type", type);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
                     return true;
                 case R.id.settings:
                     Intent intent1 = new Intent(MainWindow.this, SettingsWindow.class);
-                    intent1.putExtra("type", type);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();

@@ -15,7 +15,6 @@ import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.mapview.MapView;
 
 public class SettingsWindow extends AppCompatActivity {
-    String type;
     private MapView mapview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +24,6 @@ public class SettingsWindow extends AppCompatActivity {
         setContentView(R.layout.activity_setting_window);
 
 
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            type = extras.getString("type");
-        }
         setTitle("Settings");
         mapview = findViewById(R.id.mapview);
         mapview.getMap().move(
@@ -62,14 +56,12 @@ public class SettingsWindow extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     Intent intent = new Intent(SettingsWindow.this, MainWindow.class);
-                    intent.putExtra("type", type);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
                     return true;
                 case R.id.mylist:
                     Intent intent1 = new Intent(SettingsWindow.this, MyListWindow.class);
-                    intent1.putExtra("type", type);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();

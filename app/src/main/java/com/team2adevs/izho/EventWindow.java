@@ -81,10 +81,14 @@ public class EventWindow extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 System.out.println("error");
                 System.out.println(error.getMessage());
-
-                if(error.networkResponse.statusCode == 200){
+                try{
+                    if(error.networkResponse.statusCode == 200){
+                        request(url, tv, btn_add);
+                    }
+                } catch (NullPointerException e){
                     request(url, tv, btn_add);
                 }
+
             }
         });
                     MySingleton.getInstance(this).addToRequestQueue(stringRequest);
