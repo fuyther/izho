@@ -43,8 +43,8 @@ public class MyApplication extends Application {
         Date d = new Date();
         if (new Date(2020, 1, 8).getTime() > d.getTime()){
             return "2020-01-08";
-        } else if(d.getTime() > new Date(2020, 1, 15).getTime()){
-            return "2020-01-15";
+        } else if(d.getTime() > new Date(2020, 1, 14).getTime()){
+            return "2020-01-14";
         } else {
             return (String) DateFormat.format("yyyy-MM-dd", d.getTime());
         }
