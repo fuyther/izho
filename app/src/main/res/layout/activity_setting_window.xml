@@ -6,37 +6,77 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SettingsWindow">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/tv"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="50sp"
-        android:layout_centerHorizontal="true"/>
-    <TextView
-        android:text="+77078930162"
-        android:id="@+id/TextView01"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:layout_below="@id/tv"
-        android:autoLink="phone">
-    </TextView>
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:id="@+id/set_layout"
+        >
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tv"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="50sp"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/student_btn_set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/student"
+                android:layout_marginEnd="25sp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/team_lead"
+                android:id="@+id/teamlead_btn_set"
+                />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="35sp" />
+
+        <TextView
+            android:text="+77078930162"
+            android:id="@+id/TextView01"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:autoLink="phone">
+        </TextView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:id="@+id/last_space"/>
+
+
+
+    </LinearLayout>
 
     <com.yandex.mapkit.mapview.MapView
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/TextView01"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/btmnavbar_st"
-        android:layout_marginTop= "250sp"
-        android:layout_marginBottom= "40sp"
-        android:layout_marginStart= "40sp"
-        android:layout_marginEnd="40sp"
-        />
-
+        android:layout_below="@id/set_layout"
+        android:layout_above="@+id/btmnavbar_st"/>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

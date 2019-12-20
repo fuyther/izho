@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yandex.mapkit.Animation;
@@ -16,22 +19,51 @@ import com.yandex.mapkit.mapview.MapView;
 
 public class SettingsWindow extends AppCompatActivity {
     private MapView mapview;
+    private void change(Button bt, String color){
+        bt.setBackgroundColor(Color.parseColor(color));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MapKitFactory.setApiKey("cde76994-d9dd-4255-96ad-830cf03f240f");
         MapKitFactory.initialize(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_window);
-
-
         setTitle("Settings");
+
         mapview = findViewById(R.id.mapview);
+        BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar_st);
+        final Button st = findViewById(R.id.student_btn_set);
+        final Button tl = findViewById(R.id.teamlead_btn_set);
+        String type = ((MyApplication)getApplication()).getType();
+        //prikol
+        if(type == "st"){
+            change(st, "#40E648");
+        }
+        else if(type == "tl"){
+            change(tl, "#40E648");
+        }
+        st.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MyApplication)getApplication()).setType("st");
+                change(st, "#40E648");
+                change(tl, "#d3d3d3");
+            }
+        });
+        tl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MyApplication)getApplication()).setType("tl");
+                change(tl, "#40E648");
+                change(st, "#d3d3d3");
+            }
+        });
+
         mapview.getMap().move(
                 new CameraPosition(new Point(43.231417, 76.917620), 13f, 0.0f, 0.0f),
                 new Animation(Animation.Type.SMOOTH, 0),
                 null);
 
-        BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar_st);
         bottomnavbar.setSelectedItemId(R.id.settings);
         bottomnavbar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
