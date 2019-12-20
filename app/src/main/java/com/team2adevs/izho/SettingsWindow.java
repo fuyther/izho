@@ -35,7 +35,7 @@ public class SettingsWindow extends AppCompatActivity {
         final Button st = findViewById(R.id.student_btn_set);
         final Button tl = findViewById(R.id.teamlead_btn_set);
         String type = ((MyApplication)getApplication()).getType();
-
+        //prikol
         if(type == "st"){
             change(st, "#40E648");
         }
