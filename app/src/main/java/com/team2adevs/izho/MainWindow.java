@@ -24,11 +24,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainWindow extends AppCompatActivity {
     String type;
-    String day;
+    String url = "http://plony.hopto.org:70/list_main";
+    int i = 0;
 
 
     final String[] days = {"2020-01-08", "2020-01-09", "2020-01-10", "2020-01-11", "2020-01-12", "2020-01-13", "2020-01-14", "2020-01-15"};
@@ -37,94 +39,170 @@ public class MainWindow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_window);
         type = ((MyApplication)getApplication()).getType();
-        day = ((MyApplication) getApplication()).getDay();
-        final LinearLayout layout = findViewById(R.id.linear_l);
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar);
         bottomnavbar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         setTitle("Home");
-        String url = "http://plony.hopto.org:70/list_main";
-        JSONArray js = new JSONArray();
-        JSONObject jsobj = new JSONObject();
-        try{
-            jsobj.put("type", type);
-            jsobj.put("day", day);
-            js.put(jsobj);
-        }
-        catch (JSONException e) {
-            System.out.println(e.getMessage());
-        }
-        request(url, js, layout, params);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.days, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.day_1:
-                System.out.println("Day 1");
-                ((MyApplication)getApplication()).setDay(days[0]);
-                Intent intent = new Intent(MainWindow.this, MainWindow.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            case R.id.day_2:
-                System.out.println("Day 2");
-                ((MyApplication)getApplication()).setDay(days[1]);
-                Intent intent1 = new Intent(MainWindow.this, MainWindow.class);
-                startActivity(intent1);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            case R.id.day_3:
-                System.out.println("Day 3");
-                ((MyApplication)getApplication()).setDay(days[2]);
-                Intent intent2 = new Intent(MainWindow.this, MainWindow.class);
-                startActivity(intent2);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            case R.id.day_4:
-                System.out.println("Day 4");
-                ((MyApplication)getApplication()).setDay(days[3]);
-                Intent intent3 = new Intent(MainWindow.this, MainWindow.class);
-                startActivity(intent3);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            case R.id.day_5:
-                System.out.println("Day 5");
-                ((MyApplication)getApplication()).setDay(days[4]);
-                Intent intent4 = new Intent(MainWindow.this, MainWindow.class);
-                startActivity(intent4);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            case R.id.day_6:
-                System.out.println("Day 6");
-                ((MyApplication)getApplication()).setDay(days[5]);
-                Intent intent5 = new Intent(MainWindow.this, MainWindow.class);
-                startActivity(intent5);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            case R.id.day_7:
-                System.out.println("Day 7");
-                ((MyApplication)getApplication()).setDay(days[6]);
-                Intent intent6 = new Intent(MainWindow.this, MainWindow.class);
-                startActivity(intent6);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
+        LinearLayout layout1 = findViewById(R.id.layout_day1);
+        LinearLayout layout2 = findViewById(R.id.layout_day2);
+        LinearLayout layout3 = findViewById(R.id.layout_day3);
+        LinearLayout layout4 = findViewById(R.id.layout_day4);
+        LinearLayout layout5 = findViewById(R.id.layout_day5);
+        LinearLayout layout6 = findViewById(R.id.layout_day6);
+        LinearLayout layout7 = findViewById(R.id.layout_day7);
+        final LinearLayout[] layouts = new LinearLayout[]{layout1, layout2, layout3, layout4, layout5, layout6, layout7};
+
+        final boolean[] is_opened = new boolean[7];
+
+
+        Button day1 = findViewById(R.id.btn_day1);
+        Button day2 = findViewById(R.id.btn_day2);
+        Button day3 = findViewById(R.id.btn_day3);
+        Button day4 = findViewById(R.id.btn_day4);
+        Button day5 = findViewById(R.id.btn_day5);
+        Button day6 = findViewById(R.id.btn_day6);
+        Button day7 = findViewById(R.id.btn_day7);
+
+        // Click Listeners
+        day1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!is_opened[0]) {
+                    LinearLayout layout_i = layouts[0];
+                    JSONArray js = new JSONArray();
+                    JSONObject jsobj = new JSONObject();
+                    try {
+                        jsobj.put("type", type);
+                        jsobj.put("day", days[0]);
+                        js.put(jsobj);
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    request(url, js, layout_i, params);
+                    is_opened[0] = true;
+                }
             }
+        });
+        day2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!is_opened[1]) {
+                    LinearLayout layout_i = layouts[1];
+                    JSONArray js = new JSONArray();
+                    JSONObject jsobj = new JSONObject();
+                    try {
+                        jsobj.put("type", type);
+                        jsobj.put("day", days[1]);
+                        js.put(jsobj);
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    request(url, js, layout_i, params);
+                    is_opened[1] = true;
+                }
+            }
+        });
+        day3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!is_opened[2]) {
+                    LinearLayout layout_i = layouts[2];
+                    JSONArray js = new JSONArray();
+                    JSONObject jsobj = new JSONObject();
+                    try {
+                        jsobj.put("type", type);
+                        jsobj.put("day", days[2]);
+                        js.put(jsobj);
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    request(url, js, layout_i, params);
+                    is_opened[2] = true;
+                }
+            }
+        });
+        day4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!is_opened[3]) {
+                    LinearLayout layout_i = layouts[3];
+                    JSONArray js = new JSONArray();
+                    JSONObject jsobj = new JSONObject();
+                    try {
+                        jsobj.put("type", type);
+                        jsobj.put("day", days[3]);
+                        js.put(jsobj);
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    request(url, js, layout_i, params);
+                    is_opened[3] = true;
+                }
+            }
+        });
+        day5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!is_opened[4]) {
+                    LinearLayout layout_i = layouts[4];
+                    JSONArray js = new JSONArray();
+                    JSONObject jsobj = new JSONObject();
+                    try {
+                        jsobj.put("type", type);
+                        jsobj.put("day", days[4]);
+                        js.put(jsobj);
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    request(url, js, layout_i, params);
+                    is_opened[4] = true;
+                }
+            }
+        });
+        day6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!is_opened[5]) {
+                    LinearLayout layout_i = layouts[5];
+                    JSONArray js = new JSONArray();
+                    JSONObject jsobj = new JSONObject();
+                    try {
+                        jsobj.put("type", type);
+                        jsobj.put("day", days[5]);
+                        js.put(jsobj);
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    request(url, js, layout_i, params);
+                    is_opened[5] = true;
+                }
+            }
+        });
+        day7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!is_opened[6]) {
+                    LinearLayout layout_i = layouts[6];
+                    JSONArray js = new JSONArray();
+                    JSONObject jsobj = new JSONObject();
+                    try {
+                        jsobj.put("type", type);
+                        jsobj.put("day", days[6]);
+                        js.put(jsobj);
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    request(url, js, layout_i, params);
+                    is_opened[6] = true;
+                }
+            }
+        });
 
-        return true;
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
