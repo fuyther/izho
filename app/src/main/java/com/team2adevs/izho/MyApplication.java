@@ -13,8 +13,7 @@ public class MyApplication extends Application {
     private ArrayList<Integer> ids = reloadIds();
     private String day = reloadDay();
     private String type = reloadType();
-    private SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-    private SharedPreferences.Editor editor = sharedPreferences.edit();
+
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String ID = "id";
@@ -22,6 +21,8 @@ public class MyApplication extends Application {
     public static final String TYPE = "type";
 
     private void updateIds(ArrayList ids){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TYPE, type);
         for(int i = 0; i < ids.size(); i++){
             editor.putInt(ID + (i + 1), (int)ids.get(i));
@@ -30,17 +31,23 @@ public class MyApplication extends Application {
     }
 
     private void updateDay(String day){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(DAY, day);
         editor.apply();
     }
 
     private void updateType(String type){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TYPE, type);
         editor.apply();
     }
 
     private String reloadDay(){
         try{
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             return sharedPreferences.getString(DAY, "");
         } catch (Exception e){
             return "";
@@ -49,6 +56,8 @@ public class MyApplication extends Application {
 
     private String reloadType(){
         try{
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             return sharedPreferences.getString(TYPE, "st");
         } catch (Exception e){
             return "st";
@@ -59,6 +68,8 @@ public class MyApplication extends Application {
         ArrayList<Integer> ids = new ArrayList<>();
         int counter = 1;
         try{
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             while(true){
                 int id = sharedPreferences.getInt(ID + counter, -1);
                 if (id == -1){
