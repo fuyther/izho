@@ -42,7 +42,16 @@ public class MyListWindow extends AppCompatActivity {
         JSONArray ids = new JSONArray(((MyApplication) getApplication()).getIds());
         String url = "http://plony.hopto.org:70/events";
         JSONObject jsobj = new JSONObject();
-        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.POST, url,ids,
+        JSONArray r = new JSONArray();
+        try{
+            jsobj.put("ids", ids);
+            jsobj.put("type", ((MyApplication)getApplication()).getType());
+            r.put(jsobj);
+        } catch (JSONException e){
+            System.out.println(e.getMessage());
+        }
+
+        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.POST, url, r,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response){

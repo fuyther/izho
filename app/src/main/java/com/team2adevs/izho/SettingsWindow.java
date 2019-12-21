@@ -22,6 +22,12 @@ public class SettingsWindow extends AppCompatActivity {
     private void change(Button bt, String color){
         bt.setBackgroundColor(Color.parseColor(color));
     }
+    private void activate(Button bt){
+        change(bt, "#40E648");
+    }
+    private void deactive(Button bt){
+        change(bt, "#d3d3d3");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MapKitFactory.setApiKey("cde76994-d9dd-4255-96ad-830cf03f240f");
@@ -35,27 +41,26 @@ public class SettingsWindow extends AppCompatActivity {
         final Button st = findViewById(R.id.student_btn_set);
         final Button tl = findViewById(R.id.teamlead_btn_set);
         String type = ((MyApplication)getApplication()).getType();
-        //prikol
-        if(type == "st"){
-            change(st, "#40E648");
+        if(type.equals("st")){
+            activate(st);
         }
-        else if(type == "tl"){
-            change(tl, "#40E648");
+        else if(type.equals("tl")){
+            activate(tl);
         }
         st.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MyApplication)getApplication()).setType("st");
-                change(st, "#40E648");
-                change(tl, "#d3d3d3");
+                activate(st);
+                deactive(tl);
             }
         });
         tl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MyApplication)getApplication()).setType("tl");
-                change(tl, "#40E648");
-                change(st, "#d3d3d3");
+                activate(tl);
+                deactive(st);
             }
         });
 

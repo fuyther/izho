@@ -10,9 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 public class MyApplication extends Application {
-    private ArrayList<Integer> ids = reloadIds();
-    private String day = reloadDay();
-    private String type = reloadType();
+    private ArrayList<Integer> ids = new ArrayList<>();
+    private String day = "";
+    private String type = "";
 
 
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -47,9 +47,9 @@ public class MyApplication extends Application {
     private String reloadDay(){
         try{
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-            return sharedPreferences.getString(DAY, "");
+            return sharedPreferences.getString(DAY, getToday());
         } catch (Exception e){
-            return "";
+            return getToday();
         }
     }
 
@@ -91,14 +91,25 @@ public class MyApplication extends Application {
     }
 
     public String getDay(){
-        if (!day.equals("")){
-            return day;
-        } else {
-            return getToday();
+        if (day.equals("")){
+            try{
+                day = reloadDay();
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+                return getToday();
+            }
         }
+        return day;
     }
 
     public ArrayList<Integer> getIds(){
+        if (ids.equals(new ArrayList<Integer>())){
+            try{
+                ids = reloadIds();
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
         return ids;
     }
 
@@ -107,7 +118,16 @@ public class MyApplication extends Application {
         updateType(type);
     }
 
-    public String getType() { return type; }
+    public String getType() {
+        if (type.equals("")){
+            try{
+                type = reloadType();
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return type;
+    }
 
     public static String getToday(){
         Date d = new Date();
