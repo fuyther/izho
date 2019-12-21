@@ -58,13 +58,16 @@ public class MyApplication extends Application {
     private ArrayList<Integer> reloadIds(){
         ArrayList<Integer> ids = new ArrayList<>();
         int counter = 1;
-        while(true){
-            int id = sharedPreferences.getInt(ID + counter, -1);
-            if (id == -1){
-                break;
+        try{
+            while(true){
+                int id = sharedPreferences.getInt(ID + counter, -1);
+                if (id == -1){
+                    break;
+                }
+                counter++;
+                ids.add(id);
             }
-            ids.add(id);
-        }
+        } catch (Exception e){}
         return ids;
     }
 
