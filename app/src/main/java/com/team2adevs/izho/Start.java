@@ -21,6 +21,9 @@ public class Start extends AppCompatActivity {
         Button student = findViewById(R.id.student_btn);
         Button team_lead = findViewById(R.id.teamlead_btn);
 
+        if (!((MyApplication)getApplication()).getType().equals("")){
+            switch_view(MainWindow.class);
+        }
         student.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

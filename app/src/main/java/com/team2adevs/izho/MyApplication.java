@@ -47,7 +47,6 @@ public class MyApplication extends Application {
     private String reloadDay(){
         try{
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
             return sharedPreferences.getString(DAY, "");
         } catch (Exception e){
             return "";
@@ -57,10 +56,9 @@ public class MyApplication extends Application {
     private String reloadType(){
         try{
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            return sharedPreferences.getString(TYPE, "st");
+            return sharedPreferences.getString(TYPE, "");
         } catch (Exception e){
-            return "st";
+            return "";
         }
     }
 
@@ -69,7 +67,6 @@ public class MyApplication extends Application {
         int counter = 1;
         try{
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
             while(true){
                 int id = sharedPreferences.getInt(ID + counter, -1);
                 if (id == -1){
