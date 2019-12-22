@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -28,7 +29,8 @@ import java.util.HashMap;
 
 public class MyListWindow extends AppCompatActivity {
 
-    HashMap<String, ArrayList<Integer>> day_id = new HashMap<>();
+    HashMap<String, ArrayList<JSONArray>> day_id = new HashMap<>();
+    HashMap<String, Boolean> is_checked = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,42 +68,49 @@ public class MyListWindow extends AppCompatActivity {
 
                             for(int i=length-1; i > -1; i--){
                                 JSONArray event = response.getJSONArray(i);
-                                final int id =  event.getInt(0);
                                 long time = event.getLong(2);
                                 String date = getDay(time * 1000);
                                 if(day_id.containsKey(date)){
-                                    day_id.get(date).add(id);
+                                    day_id.get(date).add(event);
                                 } else {
-                                    ArrayList<Integer> tmp = new ArrayList<>();
-                                    tmp.add(id);
+                                    ArrayList<JSONArray> tmp = new ArrayList<>();
+                                    tmp.add(event);
                                     day_id.put(date, tmp);
+                                    is_checked.put(date, false);
                                 }
                             }
                             System.out.println(day_id.toString());
                             for(final String key: day_id.keySet()){
-                                Button btn_new = new Button(MyListWindow.this);
-                                btn_new.setText(key);
-                                btn_new.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                TextView day = new TextView(MyListWindow.this);
+                                day.setText(key);
+                                day.setTextSize(24);
+                                day.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                                day.setTextColor(getResources().getColor(R.color.White));
 
                                 final LinearLayout layout1 = new LinearLayout(MyListWindow.this);
+                                layout1.setOrientation(LinearLayout.VERTICAL);
 
-                                btn_new.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        JSONArray js1 = new JSONArray();
-                                        JSONObject jsonObject = new JSONObject();
-                                        try{
-                                            jsonObject.put("type", ((MyApplication)getApplication()).getType());
-                                            jsonObject.put("ids", new JSONArray(day_id.get(key).toArray()));
-                                            js1.put(jsonObject);
-                                            request("http://plony.hopto.org:70/events", js1, layout1, params);
-                                        } catch (JSONException e){
-                                            System.out.println(e.getMessage());
-                                        }
-                                    }
-                                });
-                                layout.addView(btn_new, params);
+
+                                layout.addView(day, params);
                                 layout.addView(layout1, params);
+
+                                for (final JSONArray i: day_id.get(key)){
+                                    Button btn = new Button(MyListWindow.this);
+                                    String name = i.getString(1);
+                                    String time_start = getTime(i.getLong(2) * 1000);
+                                    final int id = i.getInt(0);
+                                    btn.setText(name + " " + time_start);
+                                    btn.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                    btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(MyListWindow.this, EventWindow.class);
+                                            intent.putExtra("id", id);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                    layout1.addView(btn);
+                                }
                             }
                         }
                         catch(JSONException e){
@@ -167,57 +176,5 @@ public class MyListWindow extends AppCompatActivity {
             return false;
         }
     };
-    void request(final String url, final JSONArray js, final LinearLayout layout, final LinearLayout.LayoutParams params){
-        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.POST, url,js,
-                new Response.Listener<JSONArray>() {
-                    @Override
 
-                    public void onResponse(JSONArray response){
-                        System.out.println("my list window");
-                        try {
-                            System.out.println(response);
-                            int length = response.length();
-                            for(int i=length-1; i > -1; i--){
-                                JSONArray event = response.getJSONArray(i);
-                                final int id =  event.getInt(0);
-                                String name = event.getString(1);
-                                long time_start = event.getLong(2);
-                                long time_end = event.getLong(3);
-                                String date_start = getTime(time_start * 1000);
-                                String date_end = getTime(time_end * 1000);
-                                Button btn_new = new Button(MyListWindow.this);
-                                btn_new.setText(name + " " + date_start + " - " + date_end);
-                                btn_new.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                                btn_new.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(MyListWindow.this, EventWindow.class);
-                                        intent.putExtra("id", id);
-                                        startActivity(intent);
-                                    }
-                                });
-                                layout.addView(btn_new, params);
-                            }
-                        }
-                        catch(JSONException e){
-                            System.out.println(response.toString());
-                            System.out.println(e.getMessage());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("error");
-                System.out.println(error.getMessage());
-                try{
-                    if (error.networkResponse.statusCode == 200){
-                        request(url, js, layout, params);
-                    }
-                } catch (Exception e){
-                    request(url, js, layout, params);
-                }
-            }
-        });
-        MySingleton.getInstance(this).addToRequestQueue(stringRequest);
-    }
 }
