@@ -20,6 +20,10 @@ public class MyApplication extends Application {
     public static final String DAY = "day";
     public static final String TYPE = "type";
 
+    public void setIds(ArrayList<Integer> ids) {
+        this.ids = ids;
+    }
+
     private void updateIds(ArrayList ids){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -73,7 +77,9 @@ public class MyApplication extends Application {
                     break;
                 }
                 counter++;
-                ids.add(id);
+                if(!ids.contains(id)){
+                    ids.add(id);
+                }
             }
         } catch (Exception e){}
         return ids;
@@ -83,6 +89,14 @@ public class MyApplication extends Application {
         System.out.println(id);
         ids.add(id);
         updateIds(ids);
+    }
+
+    public void delete(int id){
+        try{
+            ids.remove(ids.indexOf(id));
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void setDay(String day){

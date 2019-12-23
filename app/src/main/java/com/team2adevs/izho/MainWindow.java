@@ -252,7 +252,10 @@ public class MainWindow extends AppCompatActivity {
                                     public void onClick(View v) {
                                         Intent intent = new Intent(MainWindow.this, EventWindow.class);
                                         intent.putExtra("id", id);
+                                        intent.putExtra("from", "home");
+                                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                         startActivity(intent);
+
                                     }
                                 });
                                 layout.addView(btn_new, params);

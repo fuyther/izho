@@ -3,6 +3,7 @@ package com.team2adevs.izho;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -31,8 +32,15 @@ public class EventWindow extends AppCompatActivity {
     TextView tv;
     Button btn_add;
     boolean is_added;
+    String from;
 
-    void request(final String url, final TextView tv,final Button btn_add){
+    @Override
+    protected void onStop() {
+        MyListWindow.initiated = false;
+        super.onStop();
+    }
+
+    void request(final String url, final TextView tv, final Button btn_add){
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -47,27 +55,35 @@ public class EventWindow extends AppCompatActivity {
                             final long time = response.getLong(3);
                             String date = getDate(time*1000, "HH:mm");
                             if(is_added){
-                                btn_add.setText("Added");
-                                btn_add.setBackgroundColor(getResources().getColor(R.color.Picked));
+                                btn_add.setText("Delete");
+                                btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatRed));
                             }
                             tv.setText(text);
                             btn_add.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     is_added = ((MyApplication) getApplication()).getIds().indexOf(id) != -1;
-                                    btn_add.setText("Added");
-                                    btn_add.setBackgroundColor(getResources().getColor(R.color.Picked));
-                                    Calendar c =  Calendar.getInstance();
-                                    c.set(Calendar.DAY_OF_YEAR, Integer.valueOf(getDate(time*1000, "DDD")));
-                                    c.set(Calendar.HOUR_OF_DAY, Integer.valueOf(getDate(time*1000, "HH")));
-                                    c.set(Calendar.MINUTE, Integer.valueOf(getDate(time*1000, "mm")));
-                                    c.set(Calendar.YEAR, Integer.valueOf(getDate(time*1000, "yyyy")));
-                                    startAlarm(c);
+
 
                                     int resp = ((MyApplication) getApplication()).getIds().indexOf(id);
                                     System.out.println(resp);
                                     if(!is_added) {
+                                        btn_add.setText("Delete");
+                                        btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatRed));
                                         ((MyApplication) getApplication()).append(id);
+                                        Calendar c =  Calendar.getInstance();
+                                        c.set(Calendar.DAY_OF_YEAR, Integer.valueOf(getDate(time*1000, "DDD")));
+                                        c.set(Calendar.HOUR_OF_DAY, Integer.valueOf(getDate(time*1000, "HH")));
+                                        c.set(Calendar.MINUTE, Integer.valueOf(getDate(time*1000, "mm")));
+                                        c.set(Calendar.YEAR, Integer.valueOf(getDate(time*1000, "yyyy")));
+                                        startAlarm(c, id);
+                                    } else {
+                                        btn_add.setText("Add");
+
+                                        btn_add.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                        ((MyApplication) getApplication()).delete(id);
+                                        deleteAlarm(id);
+
                                     }
                                 }
                             });
@@ -102,7 +118,9 @@ public class EventWindow extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getInt("id");
+            from = extras.getString("from");
         }
+
 
         tv = findViewById(R.id.textEvent);
         btn_add = findViewById(R.id.btn_add);
@@ -122,17 +140,24 @@ public class EventWindow extends AppCompatActivity {
             return "xx";
         }
     }
-    private void startAlarm(Calendar c){
+    private void startAlarm(Calendar c, int id){
         try {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(this, AlertReciever.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
 
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
         }
         catch(NullPointerException e){
             System.out.println(e.getMessage());
         }
     }
 
+    private void deleteAlarm(int id){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
+
+        alarmManager.cancel(pendingIntent);
+    }
 }

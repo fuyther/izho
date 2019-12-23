@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.BoringLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,24 +22,60 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.StringBufferInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
 
 public class MyListWindow extends AppCompatActivity {
 
     HashMap<String, ArrayList<JSONArray>> day_id = new HashMap<>();
-    HashMap<String, Boolean> is_checked = new HashMap<>();
+    public static Boolean initiated = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_list_window);
+    protected void onResume() {
+        if (!initiated){
+            LinearLayout layout = findViewById(R.id.linear_mylist);
+            layout.removeAllViews();
+            day_id = new HashMap<>();
+            initiate();
+        }
 
-        setTitle("My List");
+        super.onResume();
+    }
 
+    @Override
+    protected void onStop() {
+        initiated = false;
+        super.onStop();
+    }
+
+    public String[] keySort(Set<String> days){
+        String[] res = new String[days.size()];
+        days.toArray(res);
+        System.out.println(Arrays.toString(res));
+        for(int i = 0; i < res.length; i++){
+            for(int j = 0; j < res.length - 1; j++){
+                try{
+                    if(Integer.parseInt(res[j].substring(4)) > Integer.parseInt(res[j + 1].substring(4))){
+                        String swap = res[j];
+                        res[j] = res[j + 1];
+                        res[j + 1] = swap;
+                    }
+                } catch (Exception e){
+                }
+
+            }
+        }
+        System.out.println(Arrays.toString(res));
+        return res;
+    }
+
+
+    private void initiate(){
         final LinearLayout layout = findViewById(R.id.linear_mylist);
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar_ml);
@@ -61,12 +98,12 @@ public class MyListWindow extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response){
-                        System.out.println("main window");
+                        System.out.println("my list window");
                         try {
                             System.out.println(response);
                             int length = response.length();
 
-                            for(int i=length-1; i > -1; i--){
+                            for(int i = length - 1; i > -1; i--){
                                 JSONArray event = response.getJSONArray(i);
                                 long time = event.getLong(2);
                                 String date = getDay(time * 1000);
@@ -76,11 +113,10 @@ public class MyListWindow extends AppCompatActivity {
                                     ArrayList<JSONArray> tmp = new ArrayList<>();
                                     tmp.add(event);
                                     day_id.put(date, tmp);
-                                    is_checked.put(date, false);
                                 }
                             }
                             System.out.println(day_id.toString());
-                            for(final String key: day_id.keySet()){
+                            for(final String key: keySort(day_id.keySet())){
                                 TextView day = new TextView(MyListWindow.this);
                                 day.setText(key);
                                 day.setTextSize(24);
@@ -106,6 +142,8 @@ public class MyListWindow extends AppCompatActivity {
                                         public void onClick(View v) {
                                             Intent intent = new Intent(MyListWindow.this, EventWindow.class);
                                             intent.putExtra("id", id);
+                                            intent.putExtra("from", "mylist");
+                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                             startActivity(intent);
                                         }
                                     });
@@ -125,6 +163,19 @@ public class MyListWindow extends AppCompatActivity {
             }
         });
         MySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        initiated = true;
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_list_window);
+
+        setTitle("My List");
+
+        initiate();
+
     }
     private String getTime(long time){
         try{
