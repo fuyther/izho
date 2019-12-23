@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     tools:context=".MyListWindow">
     <ScrollView
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="122dp"
         tools:layout_editor_absoluteY="146dp"
+
         android:id="@+id/linear_mylist">
     </LinearLayout>
     </ScrollView>
@@ -22,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu='@menu/bottom_nav'
+        android:background="@color/White"
         android:id="@+id/btmnavbar_ml"
         android:layout_alignParentBottom="true"
         />

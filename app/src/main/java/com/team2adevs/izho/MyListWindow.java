@@ -136,7 +136,8 @@ public class MyListWindow extends AppCompatActivity {
                                     String time_start = getTime(i.getLong(2) * 1000);
                                     final int id = i.getInt(0);
                                     btn.setText(name + " " + time_start);
-                                    btn.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                    btn.setTextColor(getResources().getColor(R.color.White));
+                                    btn.setBackgroundColor(getResources().getColor(R.color.FizmatLightBlue));
                                     btn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {

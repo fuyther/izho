@@ -52,6 +52,8 @@ public class MainWindow extends AppCompatActivity {
         for(int i = 0; i < days.length; i++){
             Button day_i = new Button(MainWindow.this);
             day_i.setText("Day " + (i + 1));
+            day_i.setTextColor(getResources().getColor(R.color.White));
+            day_i.setBackgroundColor(getResources().getColor(R.color.FizmatLightBlue));
             final LinearLayout layout_i = new LinearLayout(MainWindow.this);
             layout_i.setOrientation(LinearLayout.VERTICAL);
             final int s = i;
@@ -125,7 +127,8 @@ public class MainWindow extends AppCompatActivity {
                                 String date_end = getDate(time_end * 1000);
                                 Button btn_new = new Button(MainWindow.this);
                                 btn_new.setText(name + " " + date_start + " - " + date_end);
-                                btn_new.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                btn_new.setTextColor(getResources().getColor(R.color.White));
+                                btn_new.setBackgroundColor(getResources().getColor(R.color.FizmatLightBlue));
                                 btn_new.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {

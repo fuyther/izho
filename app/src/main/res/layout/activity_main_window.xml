@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     xmlns:design="http://schemas.android.com/apk/res-auto"
     tools:context=".MainWindow">
     <ScrollView
@@ -26,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         design:menu='@menu/bottom_nav'
+        android:background="@color/White"
         android:id="@+id/btmnavbar"
         android:layout_alignParentBottom="true"
 

@@ -3,6 +3,7 @@
     <color name="colorPrimary">#edf1f5</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#012C56</color>
+    <color name="FizmatLightBlue">#053f76</color>
     <color name="FizmatRed">#CE2235</color>
     <color name="Picked">#40E648</color>
     <color name="White">#FFFFFF</color>
