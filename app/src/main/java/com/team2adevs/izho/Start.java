@@ -12,6 +12,7 @@ public class Start extends AppCompatActivity {
     private void switch_view(Class a){
         Intent i = new Intent(Start.this, a);
         startActivity(i);
+        finish();
     }
 
     @Override

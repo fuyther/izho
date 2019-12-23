@@ -18,84 +18,8 @@
 
             tools:layout_editor_absoluteX="122dp"
             tools:layout_editor_absoluteY="146dp"
-            android:id="@+id/linear_l">
-            <Button
-                android:text="@string/day1"
-                android:id="@+id/btn_day1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:id="@+id/layout_day1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                ></LinearLayout>
-            <Button
-                android:text="@string/day2"
-                android:id="@+id/btn_day2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:id="@+id/layout_day2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                ></LinearLayout>
-            <Button
-                android:text="@string/day3"
-                android:id="@+id/btn_day3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:id="@+id/layout_day3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                ></LinearLayout>
-            <Button
-                android:text="@string/day4"
-                android:id="@+id/btn_day4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:id="@+id/layout_day4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                ></LinearLayout>
-            <Button
-                android:text="@string/day5"
-                android:id="@+id/btn_day5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:id="@+id/layout_day5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                ></LinearLayout>
-            <Button
-                android:text="@string/day6"
-                android:id="@+id/btn_day6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:id="@+id/layout_day6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                ></LinearLayout>
-            <Button
-                android:text="@string/day7"
-                android:id="@+id/btn_day7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:id="@+id/layout_day7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                ></LinearLayout>
+            android:id="@+id/linear_main">
+
         </LinearLayout>
     </ScrollView>
     <com.google.android.material.bottomnavigation.BottomNavigationView

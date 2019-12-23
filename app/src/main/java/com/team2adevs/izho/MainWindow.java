@@ -18,13 +18,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.yandex.mapkit.search.Line;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class MainWindow extends AppCompatActivity {
@@ -33,7 +33,7 @@ public class MainWindow extends AppCompatActivity {
     int i = 0;
 
 
-    final String[] days = {"2020-01-08", "2020-01-09", "2020-01-10", "2020-01-11", "2020-01-12", "2020-01-13", "2020-01-14", "2020-01-15"};
+    final String[] days = {"2020-01-08", "2020-01-09", "2020-01-10", "2020-01-11", "2020-01-12", "2020-01-13", "2020-01-14"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,182 +45,40 @@ public class MainWindow extends AppCompatActivity {
 
         setTitle("Home");
 
-
-        LinearLayout layout1 = findViewById(R.id.layout_day1);
-        LinearLayout layout2 = findViewById(R.id.layout_day2);
-        LinearLayout layout3 = findViewById(R.id.layout_day3);
-        LinearLayout layout4 = findViewById(R.id.layout_day4);
-        LinearLayout layout5 = findViewById(R.id.layout_day5);
-        LinearLayout layout6 = findViewById(R.id.layout_day6);
-        LinearLayout layout7 = findViewById(R.id.layout_day7);
-        final LinearLayout[] layouts = new LinearLayout[]{layout1, layout2, layout3, layout4, layout5, layout6, layout7};
-
         final boolean[] is_opened = new boolean[7];
 
+        LinearLayout main_layout = findViewById(R.id.linear_main);
 
-        Button day1 = findViewById(R.id.btn_day1);
-        Button day2 = findViewById(R.id.btn_day2);
-        Button day3 = findViewById(R.id.btn_day3);
-        Button day4 = findViewById(R.id.btn_day4);
-        Button day5 = findViewById(R.id.btn_day5);
-        Button day6 = findViewById(R.id.btn_day6);
-        Button day7 = findViewById(R.id.btn_day7);
-
-        // Click Listeners
-        day1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!is_opened[0]) {
-                    LinearLayout layout_i = layouts[0];
-                    JSONArray js = new JSONArray();
-                    JSONObject jsobj = new JSONObject();
-                    try {
-                        jsobj.put("type", type);
-                        jsobj.put("day", days[0]);
-                        js.put(jsobj);
-                    } catch (JSONException e) {
-                        System.out.println(e.getMessage());
+        for(int i = 0; i < days.length; i++){
+            Button day_i = new Button(MainWindow.this);
+            day_i.setText("Day " + (i + 1));
+            final LinearLayout layout_i = new LinearLayout(MainWindow.this);
+            layout_i.setOrientation(LinearLayout.VERTICAL);
+            final int s = i;
+            day_i.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!is_opened[s]) {
+                        JSONArray js = new JSONArray();
+                        JSONObject jsobj = new JSONObject();
+                        try {
+                            jsobj.put("type", type);
+                            jsobj.put("day", days[s]);
+                            js.put(jsobj);
+                        } catch (JSONException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        request(url, js, layout_i, params);
+                        is_opened[s] = true;
+                    } else {
+                        layout_i.removeAllViews();
+                        is_opened[s] = false;
                     }
-                    request(url, js, layout_i, params);
-                    is_opened[0] = true;
-                } else {
-                    layouts[0].removeAllViews();
-                    is_opened[0] = false;
                 }
-            }
-        });
-        day2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!is_opened[1]) {
-                    LinearLayout layout_i = layouts[1];
-                    JSONArray js = new JSONArray();
-                    JSONObject jsobj = new JSONObject();
-                    try {
-                        jsobj.put("type", type);
-                        jsobj.put("day", days[1]);
-                        js.put(jsobj);
-                    } catch (JSONException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    request(url, js, layout_i, params);
-                    is_opened[1] = true;
-                } else {
-                    layouts[1].removeAllViews();
-                    is_opened[1] = false;
-                }
-            }
-        });
-        day3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!is_opened[2]) {
-                    LinearLayout layout_i = layouts[2];
-                    JSONArray js = new JSONArray();
-                    JSONObject jsobj = new JSONObject();
-                    try {
-                        jsobj.put("type", type);
-                        jsobj.put("day", days[2]);
-                        js.put(jsobj);
-                    } catch (JSONException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    request(url, js, layout_i, params);
-                    is_opened[2] = true;
-                } else {
-                    layouts[2].removeAllViews();
-                    is_opened[2] = false;
-                }
-            }
-        });
-        day4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!is_opened[3]) {
-                    LinearLayout layout_i = layouts[3];
-                    JSONArray js = new JSONArray();
-                    JSONObject jsobj = new JSONObject();
-                    try {
-                        jsobj.put("type", type);
-                        jsobj.put("day", days[3]);
-                        js.put(jsobj);
-                    } catch (JSONException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    request(url, js, layout_i, params);
-                    is_opened[3] = true;
-                } else {
-                    layouts[3].removeAllViews();
-                    is_opened[3] = false;
-                }
-            }
-        });
-        day5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!is_opened[4]) {
-                    LinearLayout layout_i = layouts[4];
-                    JSONArray js = new JSONArray();
-                    JSONObject jsobj = new JSONObject();
-                    try {
-                        jsobj.put("type", type);
-                        jsobj.put("day", days[4]);
-                        js.put(jsobj);
-                    } catch (JSONException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    request(url, js, layout_i, params);
-                    is_opened[4] = true;
-                } else {
-                    layouts[4].removeAllViews();
-                    is_opened[4] = false;
-                }
-            }
-        });
-        day6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!is_opened[5]) {
-                    LinearLayout layout_i = layouts[5];
-                    JSONArray js = new JSONArray();
-                    JSONObject jsobj = new JSONObject();
-                    try {
-                        jsobj.put("type", type);
-                        jsobj.put("day", days[5]);
-                        js.put(jsobj);
-                    } catch (JSONException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    request(url, js, layout_i, params);
-                    is_opened[5] = true;
-                } else {
-                    layouts[5].removeAllViews();
-                    is_opened[5] = false;
-                }
-            }
-        });
-        day7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!is_opened[6]) {
-                    LinearLayout layout_i = layouts[6];
-                    JSONArray js = new JSONArray();
-                    JSONObject jsobj = new JSONObject();
-                    try {
-                        jsobj.put("type", type);
-                        jsobj.put("day", days[6]);
-                        js.put(jsobj);
-                    } catch (JSONException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    request(url, js, layout_i, params);
-                    is_opened[6] = true;
-                } else {
-                    layouts[6].removeAllViews();
-                    is_opened[6] = false;
-                }
-            }
-        });
+            });
+            main_layout.addView(day_i);
+            main_layout.addView(layout_i);
+        }
 
 
 
