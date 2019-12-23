@@ -83,6 +83,9 @@ public class MainWindow extends AppCompatActivity {
                     }
                     request(url, js, layout_i, params);
                     is_opened[0] = true;
+                } else {
+                    layouts[0].removeAllViews();
+                    is_opened[0] = false;
                 }
             }
         });
@@ -102,6 +105,9 @@ public class MainWindow extends AppCompatActivity {
                     }
                     request(url, js, layout_i, params);
                     is_opened[1] = true;
+                } else {
+                    layouts[1].removeAllViews();
+                    is_opened[1] = false;
                 }
             }
         });
@@ -121,6 +127,9 @@ public class MainWindow extends AppCompatActivity {
                     }
                     request(url, js, layout_i, params);
                     is_opened[2] = true;
+                } else {
+                    layouts[2].removeAllViews();
+                    is_opened[2] = false;
                 }
             }
         });
@@ -140,6 +149,9 @@ public class MainWindow extends AppCompatActivity {
                     }
                     request(url, js, layout_i, params);
                     is_opened[3] = true;
+                } else {
+                    layouts[3].removeAllViews();
+                    is_opened[3] = false;
                 }
             }
         });
@@ -159,6 +171,9 @@ public class MainWindow extends AppCompatActivity {
                     }
                     request(url, js, layout_i, params);
                     is_opened[4] = true;
+                } else {
+                    layouts[4].removeAllViews();
+                    is_opened[4] = false;
                 }
             }
         });
@@ -178,6 +193,9 @@ public class MainWindow extends AppCompatActivity {
                     }
                     request(url, js, layout_i, params);
                     is_opened[5] = true;
+                } else {
+                    layouts[5].removeAllViews();
+                    is_opened[5] = false;
                 }
             }
         });
@@ -197,6 +215,9 @@ public class MainWindow extends AppCompatActivity {
                     }
                     request(url, js, layout_i, params);
                     is_opened[6] = true;
+                } else {
+                    layouts[6].removeAllViews();
+                    is_opened[6] = false;
                 }
             }
         });
