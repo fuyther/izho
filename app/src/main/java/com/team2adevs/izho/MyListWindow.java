@@ -2,6 +2,8 @@ package com.team2adevs.izho;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -34,6 +37,7 @@ public class MyListWindow extends AppCompatActivity {
 
     HashMap<String, ArrayList<JSONArray>> day_id = new HashMap<>();
     public static Boolean initiated = false;
+    Toolbar toolbar;
 
     @Override
     protected void onResume() {
@@ -173,7 +177,8 @@ public class MyListWindow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_list_window);
 
-        setTitle("My List");
+        toolbar = findViewById(R.id.toolbar_ml);
+        toolbar.setTitle("My List");
 
         initiate();
 

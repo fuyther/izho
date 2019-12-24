@@ -2,6 +2,8 @@ package com.team2adevs.izho;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yandex.mapkit.Animation;
@@ -19,6 +22,7 @@ import com.yandex.mapkit.mapview.MapView;
 
 public class SettingsWindow extends AppCompatActivity {
     private MapView mapview;
+    Toolbar toolbar;
     private void change(Button bt, String color){
         bt.setBackgroundColor(Color.parseColor(color));
     }
@@ -34,7 +38,8 @@ public class SettingsWindow extends AppCompatActivity {
         MapKitFactory.initialize(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_window);
-        setTitle("Settings");
+        toolbar = findViewById(R.id.toolbar_set);
+        toolbar.setTitle("Settings");
 
         mapview = findViewById(R.id.mapview);
         BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar_st);

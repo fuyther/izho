@@ -11,9 +11,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,6 +36,7 @@ public class EventWindow extends AppCompatActivity {
     Button btn_add;
     boolean is_added;
     String from;
+    Toolbar toolbar;
 
     @Override
     protected void onStop() {
@@ -50,7 +54,7 @@ public class EventWindow extends AppCompatActivity {
                             System.out.println(response);
                             is_added = ((MyApplication) getApplication()).getIds().indexOf(id) != -1;
                             String name =  response.getString(1);
-                            setTitle(name);
+                            ((TextView)findViewById(R.id.toolbar_text)).setText(name);
                             String text = response.getString(2);
                             final long time = response.getLong(3);
                             String date = getDate(time*1000, "HH:mm");
@@ -121,9 +125,10 @@ public class EventWindow extends AppCompatActivity {
             from = extras.getString("from");
         }
 
-
+        toolbar = findViewById(R.id.toolbar);
         tv = findViewById(R.id.textEvent);
         btn_add = findViewById(R.id.btn_add);
+
 
         String url = "http://plony.hopto.org:70/event/" + id;
         request(url, tv, btn_add);

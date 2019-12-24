@@ -1,6 +1,7 @@
 package com.team2adevs.izho;
 
 import android.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class MainWindow extends AppCompatActivity {
     String type;
     String url = "http://plony.hopto.org:70/list_main";
     int i = 0;
+    Toolbar toolbar;
 
 
     final String[] days = {"2020-01-08", "2020-01-09", "2020-01-10", "2020-01-11", "2020-01-12", "2020-01-13", "2020-01-14"};
@@ -43,7 +45,8 @@ public class MainWindow extends AppCompatActivity {
         BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar);
         bottomnavbar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        setTitle("Home");
+        toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Home");
 
         final boolean[] is_opened = new boolean[7];
 
@@ -109,65 +112,69 @@ public class MainWindow extends AppCompatActivity {
     };
 
     void request(final String url, final JSONArray js, final LinearLayout layout, final LinearLayout.LayoutParams params){
-        JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.POST, url,js,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response){
-                        System.out.println("main window");
-                        try {
-                            System.out.println(response);
-                            int length = response.length();
-                            for(int i=length-1; i > -1; i--){
-                                JSONArray event = response.getJSONArray(i);
-                                final int id =  event.getInt(0);
-                                String name = event.getString(1);
-                                long time_start = event.getLong(2);
-                                long time_end = event.getLong(3);
-                                String date_start = getDate(time_start * 1000);
-                                String date_end = getDate(time_end * 1000);
-                                Button btn_new = new Button(MainWindow.this);
-                                btn_new.setText(name + " " + date_start + " - " + date_end);
-                                btn_new.setTextColor(getResources().getColor(R.color.White));
-                                btn_new.setBackgroundColor(getResources().getColor(R.color.FizmatLightBlue));
-                                btn_new.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(MainWindow.this, EventWindow.class);
-                                        intent.putExtra("id", id);
-                                        intent.putExtra("from", "home");
-                                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                        startActivity(intent);
+        try{
+            JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.POST, url,js,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response){
+                            System.out.println("main window");
+                            try {
+                                System.out.println(response);
+                                int length = response.length();
+                                for(int i=length-1; i > -1; i--){
+                                    JSONArray event = response.getJSONArray(i);
+                                    final int id =  event.getInt(0);
+                                    String name = event.getString(1);
+                                    long time_start = event.getLong(2);
+                                    long time_end = event.getLong(3);
+                                    String date_start = getDate(time_start * 1000);
+                                    String date_end = getDate(time_end * 1000);
+                                    Button btn_new = new Button(MainWindow.this);
+                                    btn_new.setText(name + " " + date_start + " - " + date_end);
+                                    btn_new.setTextColor(getResources().getColor(R.color.White));
+                                    btn_new.setBackgroundColor(getResources().getColor(R.color.FizmatLightBlue));
+                                    btn_new.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(MainWindow.this, EventWindow.class);
+                                            intent.putExtra("id", id);
+                                            intent.putExtra("from", "home");
+                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                            startActivity(intent);
 
-                                    }
-                                });
-                                layout.addView(btn_new, params);
+                                        }
+                                    });
+                                    layout.addView(btn_new, params);
+                                }
+                                Button btn_type = new Button(MainWindow.this);
+                                btn_type.setText(type);
+                                btn_type.setTextColor(getResources().getColor(R.color.FizmatRed));
+                                btn_type.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                layout.addView(btn_type, params);
                             }
-                            Button btn_type = new Button(MainWindow.this);
-                            btn_type.setText(type);
-                            btn_type.setTextColor(getResources().getColor(R.color.FizmatRed));
-                            btn_type.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                            layout.addView(btn_type, params);
+                            catch(JSONException e){
+                                System.out.println(response.toString());
+                                System.out.println(e.getMessage());
+                            }
                         }
-                        catch(JSONException e){
-                            System.out.println(response.toString());
-                            System.out.println(e.getMessage());
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("error");
+                    System.out.println(error.getMessage());
+                    try{
+                        if (error.networkResponse.statusCode == 200){
+                            request(url, js, layout, params);
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("error");
-                System.out.println(error.getMessage());
-                try{
-                    if (error.networkResponse.statusCode == 200){
+                    } catch (Exception e){
                         request(url, js, layout, params);
                     }
-                } catch (Exception e){
-                    request(url, js, layout, params);
                 }
-            }
-        });
-        MySingleton.getInstance(this).addToRequestQueue(stringRequest);
+            });
+            MySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        } catch (Exception e){
+            request(url, js, layout, params);
+        }
     }
     private String getDate(long time){
         try{

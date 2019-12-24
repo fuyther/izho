@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
     tools:context=".EventWindow">
+    <include
+        layout="@layout/toolbarbtn"
+        android:id="@+id/toolbar">
+    </include>
 
     <ScrollView
         android:layout_width="match_parent"

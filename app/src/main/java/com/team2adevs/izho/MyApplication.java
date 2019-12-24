@@ -28,6 +28,15 @@ public class MyApplication extends Application {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TYPE, type);
+        int counter = 0;
+        while (true){
+            if (sharedPreferences.getInt(ID + (counter + 1), -1) == -1){
+                break;
+            }
+            editor.remove(ID + (counter + 1));
+            counter++;
+        }
+        editor.apply();
         for(int i = 0; i < ids.size(); i++){
             editor.putInt(ID + (i + 1), (int)ids.get(i));
         }
@@ -94,6 +103,7 @@ public class MyApplication extends Application {
     public void delete(int id){
         try{
             ids.remove(ids.indexOf(id));
+            updateIds(ids);
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
