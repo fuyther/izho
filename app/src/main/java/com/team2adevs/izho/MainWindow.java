@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import android.app.Application;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -148,6 +150,8 @@ public class MainWindow extends AppCompatActivity {
                                 }
                                 Button btn_type = new Button(MainWindow.this);
                                 btn_type.setText(type);
+                                Typeface tf = ResourcesCompat.getFont(getApplicationContext(), R.font.archive);
+                                btn_type.setTypeface(tf, Typeface.NORMAL);
                                 btn_type.setTextColor(getResources().getColor(R.color.FizmatRed));
                                 btn_type.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                                 layout.addView(btn_type, params);

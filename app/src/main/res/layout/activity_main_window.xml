@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         design:menu='@menu/bottom_nav'
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:id="@+id/btmnavbar"
         android:layout_alignParentBottom="true"
 

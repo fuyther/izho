@@ -10,12 +10,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -54,7 +56,14 @@ public class EventWindow extends AppCompatActivity {
                             System.out.println(response);
                             is_added = ((MyApplication) getApplication()).getIds().indexOf(id) != -1;
                             String name =  response.getString(1);
-                            ((TextView)findViewById(R.id.toolbar_text)).setText(name);
+                            Button toolbar_btn = (findViewById(R.id.toolbar_btn));
+                            toolbar_btn.setText(name);
+                            toolbar_btn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    finish();
+                                }
+                            });
                             String text = response.getString(2);
                             final long time = response.getLong(3);
                             String date = getDate(time*1000, "HH:mm");
@@ -63,6 +72,9 @@ public class EventWindow extends AppCompatActivity {
                                 btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatRed));
                             }
                             tv.setText(text);
+                            Typeface tf = ResourcesCompat.getFont(getApplicationContext(), R.font.archive);
+                            tv.setTypeface(tf);
+                            btn_add.setTypeface(tf);
                             btn_add.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

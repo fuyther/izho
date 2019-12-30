@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorAccent"
-    android:elevation="4dp"
+    android:elevation="5sp"
     app:title="@string/app_name"
     app:titleTextColor="@color/colorPrimary"
     android:layout_alignParentEnd="true">

@@ -3,10 +3,12 @@ package com.team2adevs.izho;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,7 +46,10 @@ public class SettingsWindow extends AppCompatActivity {
         mapview = findViewById(R.id.mapview);
         BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar_st);
         final Button st = findViewById(R.id.student_btn_set);
+        Typeface tf = ResourcesCompat.getFont(getApplicationContext(), R.font.archive);
+        st.setTypeface(tf);
         final Button tl = findViewById(R.id.teamlead_btn_set);
+        tl.setTypeface(tf);
         String type = ((MyApplication)getApplication()).getType();
         if(type.equals("st")){
             activate(st);
