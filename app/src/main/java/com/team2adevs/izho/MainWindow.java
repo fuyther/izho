@@ -1,9 +1,11 @@
 package com.team2adevs.izho;
 
+import android.Manifest;
 import android.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import android.app.Application;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +16,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.android.volley.Request;
@@ -36,6 +40,7 @@ public class MainWindow extends AppCompatActivity {
     String url = "http://plony.hopto.org:70/list_main";
     int i = 0;
     Toolbar toolbar;
+    int PERMISSION_TO_WRITE_CALENDAR = 2;
 
 
     final String[] days = {"2020-01-08", "2020-01-09", "2020-01-10", "2020-01-11", "2020-01-12", "2020-01-13", "2020-01-14"};
@@ -86,6 +91,14 @@ public class MainWindow extends AppCompatActivity {
             });
             main_layout.addView(day_i);
             main_layout.addView(layout_i);
+            if (ContextCompat.checkSelfPermission(MainWindow.this, Manifest.permission.WRITE_CALENDAR)
+                    != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(MainWindow.this, Manifest.permission.READ_CALENDAR)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(
+                        new String[]{Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR},
+                        PERMISSION_TO_WRITE_CALENDAR);
+            }
         }
 
 

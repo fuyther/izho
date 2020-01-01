@@ -13,6 +13,7 @@ public class MyApplication extends Application {
     private ArrayList<Integer> ids = new ArrayList<>();
     private String day = "";
     private String type = "";
+    private boolean started = false;
 
 
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -94,6 +95,7 @@ public class MyApplication extends Application {
         return ids;
     }
 
+
     public void append(int id){
         System.out.println(id);
         ids.add(id);
@@ -127,12 +129,9 @@ public class MyApplication extends Application {
     }
 
     public ArrayList<Integer> getIds(){
-        if (ids.equals(new ArrayList<Integer>())){
-            try{
-                ids = reloadIds();
-            } catch (Exception e){
-                System.out.println(e.getMessage());
-            }
+        if (!started) {
+            ids = reloadIds();
+            started = true;
         }
         return ids;
     }

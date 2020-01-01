@@ -51,9 +51,11 @@ public class SettingsWindow extends AppCompatActivity {
         String type = ((MyApplication)getApplication()).getType();
         if(type.equals("st")){
             activate(st);
+            deactive(tl);
         }
         else if(type.equals("tl")){
             activate(tl);
+            deactive(st);
         }
         st.setOnClickListener(new View.OnClickListener() {
             @Override

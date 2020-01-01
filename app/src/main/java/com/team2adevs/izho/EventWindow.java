@@ -1,17 +1,25 @@
 package com.team2adevs.izho;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Events;
 import android.text.Layout;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +27,7 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.android.volley.Request;
@@ -34,6 +43,7 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class EventWindow extends AppCompatActivity {
     int id;
@@ -42,6 +52,9 @@ public class EventWindow extends AppCompatActivity {
     boolean is_added;
     String from;
     Toolbar toolbar;
+    int PERMISSION_TO_WRITE_CALENDAR = 2;
+
+    long callID = 3;
 
     @Override
     protected void onStop() {
@@ -49,13 +62,28 @@ public class EventWindow extends AppCompatActivity {
         super.onStop();
     }
 
-    private void setNotification(long time) {
+    private void setNotification(long time_start, long time_end, long delay, String title, String description) {
         Calendar c =  Calendar.getInstance();
-        c.set(Calendar.DAY_OF_YEAR, Integer.valueOf(getDate(time*1000, "DDD")));
-        c.set(Calendar.HOUR_OF_DAY, Integer.valueOf(getDate(time*1000, "HH")));
-        c.set(Calendar.MINUTE, Integer.valueOf(getDate(time*1000, "mm")));
-        c.set(Calendar.YEAR, Integer.valueOf(getDate(time*1000, "yyyy")));
+        c.set(Calendar.DAY_OF_YEAR, Integer.valueOf(getDate((time_start + delay) * 1000, "DDD")));
+        c.set(Calendar.HOUR_OF_DAY, Integer.valueOf(getDate((time_start + delay) * 1000, "HH")));
+        c.set(Calendar.MINUTE, Integer.valueOf(getDate((time_start + delay) * 1000, "mm")));
+        c.set(Calendar.YEAR, Integer.valueOf(getDate((time_start + delay) * 1000, "yyyy")));
         startAlarm(c, id);
+
+        requestPermissions(
+                new String[]{Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR},
+                PERMISSION_TO_WRITE_CALENDAR);
+        Intent calIntent = new Intent(Intent.ACTION_INSERT);
+        calIntent.setType("vnd.android.cursor.item/event");
+        calIntent.putExtra(Events.TITLE, title);
+        calIntent.putExtra(Events.EVENT_LOCATION, "Ask one of the organization team");
+        calIntent.putExtra(Events.DESCRIPTION, description);
+        calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, time_end);
+        calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, time_start);
+        startActivity(calIntent);
+
+        System.out.println("event inserted");
+        // get the event ID that is the last element in the Uri
     }
 
     void request(final String url, final TextView tv, final Button btn_add){
@@ -67,7 +95,7 @@ public class EventWindow extends AppCompatActivity {
                         try {
                             System.out.println(response);
                             is_added = ((MyApplication) getApplication()).getIds().indexOf(id) != -1;
-                            String name =  response.getString(1);
+                            final String name =  response.getString(1);
                             Button toolbar_btn = (findViewById(R.id.toolbar_btn));
                             toolbar_btn.setText(name);
                             toolbar_btn.setOnClickListener(new View.OnClickListener() {
@@ -76,9 +104,9 @@ public class EventWindow extends AppCompatActivity {
                                     finish();
                                 }
                             });
-                            String text = response.getString(2);
+                            final String text = response.getString(2);
                             final long time = response.getLong(3);
-                            String date = getDate(time*1000, "HH:mm");
+                            final long time_end = response.getLong(4);
                             if(is_added){
                                 btn_add.setText("Delete");
                                 btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatRed));
@@ -102,7 +130,7 @@ public class EventWindow extends AppCompatActivity {
                                             public boolean onMenuItemClick(MenuItem item){
                                                 btn_add.setText("Delete");
                                                 btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatRed));
-                                                ((MyApplication) getApplication()).append(id);
+
                                                 long delay = 0;
                                                 switch (item.getItemId()){
                                                     case R.id.now:
@@ -116,7 +144,8 @@ public class EventWindow extends AppCompatActivity {
                                                     case R.id.hour:
                                                         delay = 60;
                                                 }
-                                                setNotification(time + delay * 60);
+                                                setNotification(time, time_end, delay, name, text);
+                                                ((MyApplication) getApplication()).append(id);
                                                 return true;
                                             }
                                         });
