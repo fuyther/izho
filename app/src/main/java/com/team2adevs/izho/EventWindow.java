@@ -120,7 +120,6 @@ public class EventWindow extends AppCompatActivity {
                                 public void onClick(View v) {
                                     is_added = ((MyApplication) getApplication()).getIds().indexOf(id) != -1;
 
-
                                     int resp = ((MyApplication) getApplication()).getIds().indexOf(id);
                                     System.out.println(resp);
                                     if(!is_added) {
