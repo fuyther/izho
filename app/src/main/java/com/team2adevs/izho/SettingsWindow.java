@@ -31,9 +31,7 @@ public class SettingsWindow extends AppCompatActivity {
     private void activate(Button bt){
         change(bt, "#40E648");
     }
-    private void deactive(Button bt){
-        change(bt, "#d3d3d3");
-    }
+    private void deactive(Button bt){ change(bt, "#053f76");}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MapKitFactory.setApiKey("cde76994-d9dd-4255-96ad-830cf03f240f");

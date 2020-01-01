@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Start of event"
+        android:id="@+id/now">
+    </item>
+    <item
+        android:title="5 minutes before"
+        android:id="@+id/five">
+    </item>
+    <item
+        android:title="15 minutes before"
+        android:id="@+id/fifteen">
+    </item>
+    <item
+        android:title="30 minutes before"
+        android:id="@+id/thirty">
+    </item>
+    <item
+        android:title="1 hour before"
+        android:id="@+id/hour">
+    </item>
+
+</menu>

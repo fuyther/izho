@@ -46,13 +46,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/student"
-                android:layout_marginEnd="25sp"/>
+                android:layout_marginEnd="25sp"
+                android:background="@color/FizmatLightBlue"
+                android:textColor="@color/White"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/team_lead"
                 android:id="@+id/teamlead_btn_set"
+                android:background="@color/FizmatLightBlue"
+                android:textColor="@color/White"
                 />
         </LinearLayout>
 

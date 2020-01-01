@@ -13,8 +13,10 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
@@ -23,6 +25,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.yandex.mapkit.search.BusinessFilter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +47,15 @@ public class EventWindow extends AppCompatActivity {
     protected void onStop() {
         MyListWindow.initiated = false;
         super.onStop();
+    }
+
+    private void setNotification(long time) {
+        Calendar c =  Calendar.getInstance();
+        c.set(Calendar.DAY_OF_YEAR, Integer.valueOf(getDate(time*1000, "DDD")));
+        c.set(Calendar.HOUR_OF_DAY, Integer.valueOf(getDate(time*1000, "HH")));
+        c.set(Calendar.MINUTE, Integer.valueOf(getDate(time*1000, "mm")));
+        c.set(Calendar.YEAR, Integer.valueOf(getDate(time*1000, "yyyy")));
+        startAlarm(c, id);
     }
 
     void request(final String url, final TextView tv, final Button btn_add){
@@ -84,15 +96,32 @@ public class EventWindow extends AppCompatActivity {
                                     int resp = ((MyApplication) getApplication()).getIds().indexOf(id);
                                     System.out.println(resp);
                                     if(!is_added) {
-                                        btn_add.setText("Delete");
-                                        btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatRed));
-                                        ((MyApplication) getApplication()).append(id);
-                                        Calendar c =  Calendar.getInstance();
-                                        c.set(Calendar.DAY_OF_YEAR, Integer.valueOf(getDate(time*1000, "DDD")));
-                                        c.set(Calendar.HOUR_OF_DAY, Integer.valueOf(getDate(time*1000, "HH")));
-                                        c.set(Calendar.MINUTE, Integer.valueOf(getDate(time*1000, "mm")));
-                                        c.set(Calendar.YEAR, Integer.valueOf(getDate(time*1000, "yyyy")));
-                                        startAlarm(c, id);
+                                        PopupMenu popup = new PopupMenu(EventWindow.this, v);
+                                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+                                            @Override
+                                            public boolean onMenuItemClick(MenuItem item){
+                                                btn_add.setText("Delete");
+                                                btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatRed));
+                                                ((MyApplication) getApplication()).append(id);
+                                                long delay = 0;
+                                                switch (item.getItemId()){
+                                                    case R.id.now:
+                                                        delay = 0;
+                                                    case R.id.five:
+                                                        delay = 5;
+                                                    case R.id.fifteen:
+                                                        delay = 15;
+                                                    case R.id.thirty:
+                                                        delay = 30;
+                                                    case R.id.hour:
+                                                        delay = 60;
+                                                }
+                                                setNotification(time + delay * 60);
+                                                return true;
+                                            }
+                                        });
+                                        popup.inflate(R.menu.popup);
+                                        popup.show();
                                     } else {
                                         btn_add.setText("Add");
 
