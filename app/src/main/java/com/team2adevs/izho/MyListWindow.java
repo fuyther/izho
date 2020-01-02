@@ -121,6 +121,9 @@ public class MyListWindow extends AppCompatActivity {
                                     day_id.put(date, tmp);
                                 }
                             }
+                            if(day_id.isEmpty()){
+                                layout.removeView(pb);
+                            }
                             System.out.println(day_id.toString());
                             for(final String key: keySort(day_id.keySet())){
                                 TextView day = new TextView(MyListWindow.this);
