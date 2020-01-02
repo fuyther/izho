@@ -13,7 +13,7 @@ public class AboutWindow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_window);
         Button toolbar_btn = (findViewById(R.id.toolbar_btn));
-        toolbar_btn.setText("Contacts");
+        toolbar_btn.setText("IZHO");
         toolbar_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
