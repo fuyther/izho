@@ -64,13 +64,14 @@
             android:layout_width="match_parent"
             android:layout_height="35sp" />
 
-        <TextView
-            android:text="+77078930162"
-            android:id="@+id/TextView01"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:autoLink="phone">
-        </TextView>
+            android:background="@color/FizmatLightBlue"
+            android:textColor="@color/White"
+            android:text="Contacts"
+            android:id="@+id/contacts_btn"
+            />
 
         <Space
             android:layout_width="match_parent"
@@ -81,12 +82,6 @@
 
     </LinearLayout>
 
-    <com.yandex.mapkit.mapview.MapView
-        android:id="@+id/mapview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/set_layout"
-        android:layout_above="@+id/btmnavbar_st"/>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:background="@color/colorAccent"
