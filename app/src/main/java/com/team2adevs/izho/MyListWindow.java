@@ -136,7 +136,7 @@ public class MyListWindow extends AppCompatActivity {
                                 layout.addView(day, params);
                                 layout.addView(layout1, params);
 
-                                pb.setVisibility(View.INVISIBLE);
+                                layout.removeView(pb);
 
                                 for (final JSONArray i: day_id.get(key)){
                                     Button btn = new Button(MyListWindow.this);

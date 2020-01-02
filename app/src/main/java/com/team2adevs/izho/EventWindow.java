@@ -24,6 +24,7 @@ import android.text.Layout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
@@ -52,6 +53,7 @@ public class EventWindow extends AppCompatActivity {
     boolean is_added;
     String from;
     Toolbar toolbar;
+    CheckBox checkBox;
     int PERMISSION_TO_WRITE_CALENDAR = 2;
 
     long callID = 3;
@@ -62,31 +64,28 @@ public class EventWindow extends AppCompatActivity {
         super.onStop();
     }
 
-    private void setNotification(long time_start, long time_end, long delay, String title, String description) {
+    private void setNotification(long time_start, long time_end, long delay, String title, String description, boolean adding_cal) {
         Calendar c =  Calendar.getInstance();
         c.set(Calendar.DAY_OF_YEAR, Integer.valueOf(getDate((time_start + delay) * 1000, "DDD")));
         c.set(Calendar.HOUR_OF_DAY, Integer.valueOf(getDate((time_start + delay) * 1000, "HH")));
         c.set(Calendar.MINUTE, Integer.valueOf(getDate((time_start + delay) * 1000, "mm")));
         c.set(Calendar.YEAR, Integer.valueOf(getDate((time_start + delay) * 1000, "yyyy")));
         startAlarm(c, id);
+        if(adding_cal){
+            Intent calIntent = new Intent(Intent.ACTION_INSERT);
+            calIntent.setType("vnd.android.cursor.item/event");
+            calIntent.putExtra(Events.TITLE, title);
+            calIntent.putExtra(Events.EVENT_LOCATION, "Ask one of the organization team");
+            calIntent.putExtra(Events.DESCRIPTION, description);
+            calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, time_end * 1000);
+            calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, time_start * 1000);
+            startActivity(calIntent);
 
-        requestPermissions(
-                new String[]{Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR},
-                PERMISSION_TO_WRITE_CALENDAR);
-        Intent calIntent = new Intent(Intent.ACTION_INSERT);
-        calIntent.setType("vnd.android.cursor.item/event");
-        calIntent.putExtra(Events.TITLE, title);
-        calIntent.putExtra(Events.EVENT_LOCATION, "Ask one of the organization team");
-        calIntent.putExtra(Events.DESCRIPTION, description);
-        calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, time_end);
-        calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, time_start);
-        startActivity(calIntent);
-
-        System.out.println("event inserted");
-        // get the event ID that is the last element in the Uri
+            System.out.println("event inserted");
+        }
     }
 
-    void request(final String url, final TextView tv, final Button btn_add){
+    void request(final String url, final TextView tv, final Button btn_add, final CheckBox checkBox){
         JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -108,6 +107,7 @@ public class EventWindow extends AppCompatActivity {
                             final long time = response.getLong(3);
                             final long time_end = response.getLong(4);
                             if(is_added){
+                                checkBox.setVisibility(View.GONE);
                                 btn_add.setText("Delete");
                                 btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatRed));
                             }
@@ -143,7 +143,7 @@ public class EventWindow extends AppCompatActivity {
                                                     case R.id.hour:
                                                         delay = 60;
                                                 }
-                                                setNotification(time, time_end, delay, name, text);
+                                                setNotification(time, time_end, delay, name, text, checkBox.isActivated());
                                                 ((MyApplication) getApplication()).append(id);
                                                 return true;
                                             }
@@ -172,10 +172,10 @@ public class EventWindow extends AppCompatActivity {
                 System.out.println(error.getMessage());
                 try{
                     if(error.networkResponse.statusCode == 200){
-                        request(url, tv, btn_add);
+                        request(url, tv, btn_add, checkBox);
                     }
                 } catch (NullPointerException e){
-                    request(url, tv, btn_add);
+                    request(url, tv, btn_add, checkBox);
                 }
 
             }
@@ -197,10 +197,11 @@ public class EventWindow extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         tv = findViewById(R.id.textEvent);
         btn_add = findViewById(R.id.btn_add);
+        checkBox = findViewById(R.id.checkbox);
 
 
         String url = "http://plony.hopto.org:70/event/" + id;
-        request(url, tv, btn_add);
+        request(url, tv, btn_add, checkBox);
 
     }
 
