@@ -69,6 +69,15 @@ public class SettingsWindow extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button about = findViewById(R.id.about_btn);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsWindow.this, AboutWindow.class);
+                startActivity(intent);
+
+            }
+        });
 
         BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar_st);
         final Button st = findViewById(R.id.student_btn_set);

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorAccent">
+    <include
+        layout="@layout/toolbarbtn"
+        android:id="@+id/toolbar_cont"/>
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_below="@id/toolbar_cont"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/cont_layout"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About"
+                android:textSize="30sp"
+                android:textColor="@color/White"
+                android:fontFamily="@font/archive"
+                >
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/archive"
+                android:textColor="@color/White"
+                android:textSize="14sp"
+                android:layout_marginStart="10dp"
+                android:text="This year IZhO will take place at Fizmat Almaty from January 8 to January 14, 2020, and we are more than happy to welcome your school teams to our event. Each team should consist of no more than 7 participants: 3 participants in Mathematics, 2 participants in Physics and 2 participants in Computer Science and 1 or 2 team leaders (a teacher of Maths, Physics or Computer Science). A team leader should be able to speak any one of the three official languages of the Olympiad: Kazakh, Russian or English. Each contestant is allowed to complete tasks in his/her native language. A fewer number of participants in each team, as well as the participation of several school teams from one particular country, is acceptable. You may even present the team(s) with a fewer number of contestants or participate in one subject area only. The Organizing Committee of the Olympiad has a right to limit the number of school teams representing one country or city. The participation fee for each participant and the group leader is USD 100 for those who attend the same institution/school, and USD 200 for independent participants and merging teams. The Organizing Committee covers the team expenditure on food and lodging in student residence during the Olympiad period in Almaty. Travel expenditure is due to a guest country.
+
+We would ask you to apply no later than November 23, 2019 (in case you need a visa) and no later than December 7, 2019 (in case you do not need a visa).
+
+We do believe that the participation of your students in the 16th IZhO will lead to building strong bonds between the schools of our countries."
+                />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -69,7 +69,17 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
-
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/FizmatLightBlue"
+                android:textColor="@color/White"
+                android:fontFamily="@font/archive"
+                android:text="About us"
+                android:id="@+id/about_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="20sp"
+                />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
