@@ -70,7 +70,7 @@ public class EventWindow extends AppCompatActivity {
         c.set(Calendar.HOUR_OF_DAY, Integer.valueOf(getDate((time_start + delay) * 1000, "HH")));
         c.set(Calendar.MINUTE, Integer.valueOf(getDate((time_start + delay) * 1000, "mm")));
         c.set(Calendar.YEAR, Integer.valueOf(getDate((time_start + delay) * 1000, "yyyy")));
-        startAlarm(c, id);
+        startAlarm(c, id, title, description);
         if(adding_cal){
             Intent calIntent = new Intent(Intent.ACTION_INSERT);
             calIntent.setType("vnd.android.cursor.item/event");
@@ -200,7 +200,6 @@ public class EventWindow extends AppCompatActivity {
         btn_add = findViewById(R.id.btn_add);
         checkBox = findViewById(R.id.checkbox);
 
-
         String url = "http://plony.hopto.org:70/event/" + id;
         request(url, tv, btn_add, checkBox);
 
@@ -216,10 +215,12 @@ public class EventWindow extends AppCompatActivity {
             return "xx";
         }
     }
-    private void startAlarm(Calendar c, int id){
+    private void startAlarm(Calendar c, int id, String title, String description){
         try {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(this, AlertReciever.class);
+            intent.putExtra("title", title);
+            intent.putExtra("description", description);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
