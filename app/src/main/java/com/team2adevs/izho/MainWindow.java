@@ -41,6 +41,7 @@ public class MainWindow extends AppCompatActivity {
     String url = "http://plony.hopto.org:70/list_main";
     int i = 0;
     Toolbar toolbar;
+    final int PERMISSION_ID = 12;
 
 
     final String[] days = {"2020-01-08", "2020-01-09", "2020-01-10", "2020-01-11", "2020-01-12", "2020-01-13", "2020-01-14"};
@@ -57,7 +58,10 @@ public class MainWindow extends AppCompatActivity {
         toolbar.setTitle("Home");
 
         final boolean[] is_opened = new boolean[7];
-
+        if (ContextCompat.checkSelfPermission(MainWindow.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
+        }
         LinearLayout main_layout = findViewById(R.id.linear_main);
 
         for(int i = 0; i < days.length; i++){
