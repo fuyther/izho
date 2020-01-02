@@ -158,13 +158,6 @@ public class MainWindow extends AppCompatActivity {
                                     });
                                     layout.addView(btn_new, params);
                                 }
-                                Button btn_type = new Button(MainWindow.this);
-                                btn_type.setText(type);
-                                Typeface tf = ResourcesCompat.getFont(getApplicationContext(), R.font.archive);
-                                btn_type.setTypeface(tf, Typeface.NORMAL);
-                                btn_type.setTextColor(getResources().getColor(R.color.FizmatRed));
-                                btn_type.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                                layout.addView(btn_type, params);
                             }
                             catch(JSONException e){
                                 System.out.println(response.toString());

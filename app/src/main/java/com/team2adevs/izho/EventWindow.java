@@ -143,7 +143,7 @@ public class EventWindow extends AppCompatActivity {
                                                     case R.id.hour:
                                                         delay = 60;
                                                 }
-                                                setNotification(time, time_end, delay, name, text, checkBox.isActivated());
+                                                setNotification(time, time_end, delay, name, text, checkBox.isChecked());
                                                 ((MyApplication) getApplication()).append(id);
                                                 return true;
                                             }

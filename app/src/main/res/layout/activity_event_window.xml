@@ -23,6 +23,11 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
             <LinearLayout
                 android:id="@+id/layoutEvent"
                 android:layout_marginHorizontal="25sp"
