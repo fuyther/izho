@@ -144,6 +144,7 @@ public class EventWindow extends AppCompatActivity {
                                                         delay = 60;
                                                 }
                                                 setNotification(time, time_end, delay, name, text, checkBox.isChecked());
+                                                checkBox.setVisibility(View.INVISIBLE);
                                                 ((MyApplication) getApplication()).append(id);
                                                 return true;
                                             }
@@ -152,7 +153,7 @@ public class EventWindow extends AppCompatActivity {
                                         popup.show();
                                     } else {
                                         btn_add.setText("Add");
-
+                                        checkBox.setVisibility(View.VISIBLE);
                                         btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatLightBlue));
                                         ((MyApplication) getApplication()).delete(id);
                                         deleteAlarm(id);
