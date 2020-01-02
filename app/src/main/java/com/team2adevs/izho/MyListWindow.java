@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -82,6 +83,7 @@ public class MyListWindow extends AppCompatActivity {
     private void initiate(){
         final LinearLayout layout = findViewById(R.id.linear_mylist);
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        final ProgressBar pb = findViewById(R.id.progress_bar);
         BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar_ml);
         bottomnavbar.setSelectedItemId(R.id.mylist);
         bottomnavbar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -133,6 +135,8 @@ public class MyListWindow extends AppCompatActivity {
 
                                 layout.addView(day, params);
                                 layout.addView(layout1, params);
+
+                                pb.setVisibility(View.INVISIBLE);
 
                                 for (final JSONArray i: day_id.get(key)){
                                     Button btn = new Button(MyListWindow.this);

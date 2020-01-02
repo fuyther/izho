@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,6 +73,9 @@ public class MainWindow extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (!is_opened[s]) {
+                        ProgressBar pb = new ProgressBar(MainWindow.this);
+                        pb.setVisibility(View.VISIBLE);
+                        layout_i.addView(pb);
                         JSONArray js = new JSONArray();
                         JSONObject jsobj = new JSONObject();
                         try {
@@ -81,7 +85,7 @@ public class MainWindow extends AppCompatActivity {
                         } catch (JSONException e) {
                             System.out.println(e.getMessage());
                         }
-                        request(url, js, layout_i, params);
+                        request(url, js, layout_i, params, pb);
                         is_opened[s] = true;
                     } else {
                         layout_i.removeAllViews();
@@ -127,7 +131,7 @@ public class MainWindow extends AppCompatActivity {
         }
     };
 
-    void request(final String url, final JSONArray js, final LinearLayout layout, final LinearLayout.LayoutParams params){
+    void request(final String url, final JSONArray js, final LinearLayout layout, final LinearLayout.LayoutParams params, final ProgressBar pb){
         try{
             JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.POST, url,js,
                     new Response.Listener<JSONArray>() {
@@ -137,6 +141,7 @@ public class MainWindow extends AppCompatActivity {
                             try {
                                 System.out.println(response);
                                 int length = response.length();
+                                layout.removeView(pb);
                                 for(int i=length-1; i > -1; i--){
                                     JSONArray event = response.getJSONArray(i);
                                     final int id =  event.getInt(0);
@@ -182,16 +187,16 @@ public class MainWindow extends AppCompatActivity {
                     System.out.println(error.getMessage());
                     try{
                         if (error.networkResponse.statusCode == 200){
-                            request(url, js, layout, params);
+                            request(url, js, layout, params, pb);
                         }
                     } catch (Exception e){
-                        request(url, js, layout, params);
+                        request(url, js, layout, params, pb);
                     }
                 }
             });
             MySingleton.getInstance(this).addToRequestQueue(stringRequest);
         } catch (Exception e){
-            request(url, js, layout, params);
+            request(url, js, layout, params, pb);
         }
     }
     private String getDate(long time){

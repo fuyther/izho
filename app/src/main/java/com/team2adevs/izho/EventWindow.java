@@ -153,7 +153,7 @@ public class EventWindow extends AppCompatActivity {
                                     } else {
                                         btn_add.setText("Add");
 
-                                        btn_add.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                                        btn_add.setBackgroundColor(getResources().getColor(R.color.FizmatLightBlue));
                                         ((MyApplication) getApplication()).delete(id);
                                         deleteAlarm(id);
 
