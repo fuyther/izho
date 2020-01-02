@@ -21,7 +21,12 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50sp" />
+            android:layout_height="35sp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="logo"
+            android:src="@drawable/logo"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,7 +34,8 @@
             android:textColor="@color/White"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="50sp"
+            android:fontFamily="@font/archive"
+            android:textSize="40sp"
             />
 
         <Space
@@ -37,47 +43,45 @@
             android:layout_height="50sp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/student_btn_set"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/student"
-                android:layout_marginEnd="25sp"
                 android:background="@color/FizmatLightBlue"
-                android:textColor="@color/White"/>
+                android:textColor="@color/White"
+                android:layout_marginHorizontal="20sp"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/team_lead"
                 android:id="@+id/teamlead_btn_set"
                 android:background="@color/FizmatLightBlue"
                 android:textColor="@color/White"
+                android:layout_marginHorizontal="20sp"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/FizmatLightBlue"
+                android:textColor="@color/White"
+                android:fontFamily="@font/archive"
+                android:text="Contacts"
+                android:id="@+id/contacts_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="20sp"
                 />
         </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="35sp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/FizmatLightBlue"
-            android:textColor="@color/White"
-            android:text="Contacts"
-            android:id="@+id/contacts_btn"
-            />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="35sp"
-            android:id="@+id/last_space"/>
-
 
 
     </LinearLayout>
@@ -89,5 +93,8 @@
         app:menu='@menu/bottom_nav'
         android:id="@+id/btmnavbar_st"
         android:layout_alignParentBottom="true"
-        />
+        >
+
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 </RelativeLayout>

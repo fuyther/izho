@@ -8,9 +8,9 @@
     <item
         android:id="@+id/mylist"
         android:title="My List"
-        android:icon="@drawable/ic_event_note_black_24dp"/>
+        android:icon="@drawable/ic_action_name"/>
     <item
         android:id="@+id/settings"
         android:title="Settings"
-        android:icon="@drawable/ic_event_note_black_24dp"/>
+        android:icon="@drawable/ic_settings"/>
 </menu>
