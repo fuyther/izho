@@ -52,6 +52,7 @@ public class MainWindow extends AppCompatActivity {
         type = ((MyApplication)getApplication()).getType();
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         BottomNavigationView bottomnavbar = findViewById(R.id.btmnavbar);
+        bottomnavbar.setSelectedItemId(R.id.home);
         bottomnavbar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         toolbar = findViewById(R.id.toolbar_main);
@@ -109,6 +110,12 @@ public class MainWindow extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.feed:
+                    Intent intentf = new Intent(MainWindow.this, FeedWindow.class);
+                    startActivity(intentf);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                    return true;
                 case R.id.mylist:
                     Intent intent = new Intent(MainWindow.this, MyListWindow.class);
                     startActivity(intent);

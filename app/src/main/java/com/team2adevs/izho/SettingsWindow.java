@@ -41,6 +41,7 @@ import com.yandex.runtime.Error;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class SettingsWindow extends AppCompatActivity {
     Toolbar toolbar;
@@ -123,6 +124,12 @@ public class SettingsWindow extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.feed:
+                    Intent intentf = new Intent(SettingsWindow.this, FeedWindow.class);
+                    startActivity(intentf);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                    return true;
                 case R.id.home:
                     Intent intent = new Intent(SettingsWindow.this, MainWindow.class);
                     startActivity(intent);

@@ -224,6 +224,12 @@ public class MyListWindow extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.feed:
+                    Intent intentf = new Intent(MyListWindow.this, FeedWindow.class);
+                    startActivity(intentf);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                    return true;
                 case R.id.home:
                     Intent intent = new Intent(MyListWindow.this, MainWindow.class);
                     startActivity(intent);
